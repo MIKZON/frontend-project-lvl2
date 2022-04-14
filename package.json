@@ -19,12 +19,15 @@
   "bugs": {
     "url": "https://github.com/MIKZON/frontend-project-lvl2/issues"
   },
+  "type": "module",
   "homepage": "https://github.com/MIKZON/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^9.1.0",
     "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "fs": "0.0.1-security",
     "jest": "^27.5.1",
+    "lodash": "^4.17.21",
     "prettier": "^2.6.2"
   },
   "devDependencies": {
