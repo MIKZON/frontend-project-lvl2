@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-const { Command } = require('commander');
+import { Command } from 'commander';
+
+
 
 const program = new Command();
 
@@ -8,7 +10,8 @@ program
   .description('Compares two configuration files and shows a difference.')
   .version('0.8.0')
   .argument('<filepath1> <filepath2>')
-  .option('-f, --format <type>', 'output format');
+  .option('-f, --format <type>', 'output format')
+  .action((filepath1, filepath2) => console.log(genDiff(filepath1, filepath2)));
 
 
 
