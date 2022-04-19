@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import fs, { read } from 'fs';
+import fs from 'fs';
 import path from 'path';
 
-export const genDiff = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2) => {
   const getPathFirstFile = path.resolve(process.cwd(), filepath1);
   const readFirstFile = JSON.parse(fs.readFileSync(getPathFirstFile, 'utf-8'));
 
@@ -12,10 +12,18 @@ export const genDiff = (filepath1, filepath2) => {
   const keysOfFirstFile = Object.keys(readFirstFile);
   const keysOfSecondFile = Object.keys(readSecondFile);
 
-
   const allKeys = [...keysOfFirstFile, ...keysOfSecondFile];
   const allKeysUniq = _.uniq(allKeys).sort();
+
   allKeysUniq.map((key) => {
-    console.log(readSecondFile[key]);
-  })
+
+    // const file1Value = _.has(readFirstFile, key)
+    // const file2Value = _.has(readSecondFile, key)
+    // if (readFirstFile[key] && !readSecondFile[key]) { console.log( `- ${key}: ${readFirstFile[key]}`) }
+    // if (readFirstFile[key] && readSecondFile[key]) {console.log( ` - ${key}: ${readFirstFile[key]}`)}
+    // if (!readFirstFile[key] && !readSecondFile[key]) { console.log (`- ${key}: ${readFirstFile[key]}`)}
+    // if (file1Value && file2Value  || readFirstFile[key] === readSecondFile[key]) {console.log(`+ ${key}: ${readSecondFile[key]}`)}
+  });
 };
+
+export default genDiff;
