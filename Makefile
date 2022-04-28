@@ -10,3 +10,7 @@ publish:
 go:
 
 				node index.js
+
+
+test:
+				npx jest .
