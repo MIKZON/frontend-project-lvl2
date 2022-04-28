@@ -4,7 +4,7 @@
   "description": "Hexlet project",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --no-warnings",
     "lint": "eslint --fix --ext .js,.jsx ."
   },
   "bin": {
@@ -26,12 +26,13 @@
     "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "fs": "0.0.1-security",
-    "jest": "^27.5.1",
     "lodash": "^4.17.21",
     "prettier": "^2.6.2"
   },
   "devDependencies": {
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.1.4"
+    "eslint-plugin-jest": "^26.1.4",
+    "jest": "^28.0.2",
+    "jest-cli": "^28.0.2"
   }
 }
