@@ -18,6 +18,7 @@ const genDiff = (filepath1, filepath2) => {
   const lines = allKeysUniq.map((key) => {
     const file1Value = _.has(readFirstFile, key);
     const file2Value = _.has(readSecondFile, key);
+
     if (file1Value && !file2Value) {
       return `- ${key}: ${readFirstFile[key]}`;
     }
@@ -28,7 +29,7 @@ const genDiff = (filepath1, filepath2) => {
       return `  ${key}: ${readSecondFile[key]}`;
     }
     if (readFirstFile[key] || readSecondFile[key]) {
-      return `- ${key}: ${readFirstFile[key]} \n+ ${key}: ${readSecondFile[key]}`;
+      return `- ${key}: ${readFirstFile[key]}\n+ ${key}: ${readSecondFile[key]}`;
     }
     return lines;
   });
