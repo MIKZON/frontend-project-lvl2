@@ -1,13 +1,23 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
 
 const genDiff = (filepath1, filepath2) => {
   const getPathFirstFile = path.resolve(process.cwd(), filepath1);
-  const readFirstFile = JSON.parse(fs.readFileSync(getPathFirstFile, 'utf-8'));
+  const format = path.extname(getPathFirstFile);
+  console.log(format);
+  let parse;
+  if (format === '.json' || format === '') {
+    parse = JSON.parse;
+  } else if (format === '.yml' || format === '.yaml') {
+    parse = yaml.load;
+  }
+
+  const readFirstFile = parse(fs.readFileSync(getPathFirstFile, 'utf-8'));
 
   const getPathSecondFile = path.resolve(process.cwd(), filepath2);
-  const readSecondFile = JSON.parse(fs.readFileSync(getPathSecondFile, 'utf-8'));
+  const readSecondFile = parse(fs.readFileSync(getPathSecondFile, 'utf-8'));
 
   const keysOfFirstFile = Object.keys(readFirstFile);
   const keysOfSecondFile = Object.keys(readSecondFile);
