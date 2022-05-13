@@ -12,7 +12,15 @@ const readFile = (filename) => fs.readFileSync(filename, 'utf-8');
 const afterJson = getFixturePath('after.json');
 const beforeJson = getFixturePath('before.json');
 
+const afterYaml = getFixturePath('after.yml');
+const beforeYaml = getFixturePath('before.yml');
+
 test(('genDiff testCase'), () => {
   const resultPath = readFile(getFixturePath('result.txt', 'utf-8'));
   expect(genDiff(afterJson, beforeJson)).toEqual(resultPath);
+});
+
+test(('yaml testCase'), () => {
+  const resultPath = readFile(getFixturePath('result.txt', 'utf-8'));
+  expect(genDiff(afterYaml, beforeYaml)).toEqual(resultPath);
 });
