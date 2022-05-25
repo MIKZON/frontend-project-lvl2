@@ -1,45 +1,42 @@
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
-import yaml from 'js-yaml';
+
+import parse from './ parsers/parser.js';
 
 const genDiff = (filepath1, filepath2) => {
-  const getPathFirstFile = path.resolve(process.cwd(), filepath1);
-  const format = path.extname(getPathFirstFile);
-  console.log(format);
-  let parse;
-  if (format === '.json' || format === '') {
-    parse = JSON.parse;
-  } else if (format === '.yml' || format === '.yaml') {
-    parse = yaml.load;
-  }
+  // const getPathFirstFile = getFixturePath(filepath1);
+  // let parse;
+  // if (format === '.json' || format === '') {
+  //   parse = JSON.parse;
+  // } else if (format === '.yml' || format === '.yaml') {
+  //   parse = yaml.load;
+  // }
+  const parseFirstFile = parse(filepath1);
+  const parseSecondFile = parse(filepath2);
+  // const readFirstFile = parse(readFile(getPathFirstFile, 'utf-8'));
 
-  const readFirstFile = parse(fs.readFileSync(getPathFirstFile, 'utf-8'));
+  // const getPathSecondFile = path.resolve(process.cwd(), filepath2);
+  // const readSecondFile = parse(fs.readFileSync(getPathSecondFile, 'utf-8'));
 
-  const getPathSecondFile = path.resolve(process.cwd(), filepath2);
-  const readSecondFile = parse(fs.readFileSync(getPathSecondFile, 'utf-8'));
-
-  const keysOfFirstFile = Object.keys(readFirstFile);
-  const keysOfSecondFile = Object.keys(readSecondFile);
+  const keysOfFirstFile = Object.keys(parseFirstFile);
+  const keysOfSecondFile = Object.keys(parse(filepath2));
 
   const allKeys = [...keysOfFirstFile, ...keysOfSecondFile];
+
   const allKeysUniq = _.uniq(allKeys).sort();
-
   const lines = allKeysUniq.map((key) => {
-    const file1Value = _.has(readFirstFile, key);
-    const file2Value = _.has(readSecondFile, key);
-
+    const file1Value = _.has((parseFirstFile), key);
+    const file2Value = _.has((parseSecondFile), key);
     if (file1Value && !file2Value) {
-      return `- ${key}: ${readFirstFile[key]}`;
+      return `- ${key}: ${parseFirstFile[key]}`;
     }
     if (!file1Value && file2Value) {
-      return `+ ${key}: ${readSecondFile[key]}`;
+      return `+ ${key}: ${parseSecondFile[key]}`;
     }
-    if (file1Value && file2Value && readFirstFile[key] === readSecondFile[key]) {
-      return `  ${key}: ${readSecondFile[key]}`;
+    if (file1Value && file2Value && parseFirstFile[key] === parseSecondFile[key]) {
+      return `  ${key}: ${parseSecondFile[key]}`;
     }
-    if (readFirstFile[key] || readSecondFile[key]) {
-      return `- ${key}: ${readFirstFile[key]}\n+ ${key}: ${readSecondFile[key]}`;
+    if (parseFirstFile[key] || parseSecondFile[key]) {
+      return `- ${key}: ${parseFirstFile[key]}\n+ ${key}: ${parseSecondFile[key]}`;
     }
     return lines;
   });
