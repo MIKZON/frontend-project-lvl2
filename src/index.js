@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import parse from './ parsers/parser.js';
 
-const genDiff = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2, format) => {
   const parseFirstFile = parse(filepath1);
   const parseSecondFile = parse(filepath2);
 
